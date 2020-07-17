@@ -1,0 +1,64 @@
+package com.skillenza.CRUD.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.skillenza.CRUD.model.Product;
+import com.skillenza.CRUD.services.ProductService;
+
+@CrossOrigin()
+@RestController
+@RequestMapping("/store")
+public class ProductController {
+	
+	@Autowired
+	private ProductService productservice;
+	
+	 @GetMapping("/product")
+	 public List<Product> get() {
+	  return productservice.get();
+	 }
+	 
+	 @PostMapping("/product")
+	 public Product save(@RequestBody Product product) {
+		 
+		 System.out.print("save" + product.toString());
+	  productservice.save(product);
+	  return product;
+	 }
+	 
+	 @GetMapping("/productById/{id}")
+	 public Optional<Product> get(@PathVariable int id) {
+		 
+		 System.out.println(id + "look here");
+	  return productservice.get(id);
+	 }
+	 
+	 @DeleteMapping("/product/{id}")
+	 public String delete(@PathVariable int id) {
+	  
+		 System.out.println(id + "look here");
+	  productservice.delete(id);
+	  
+	  return "Employee removed with id "+id;
+	  
+	 }
+	 
+	 @PutMapping("/employee")
+	 public Product update(@RequestBody Product employee) {
+	  productservice.save(employee);
+	  return employee;
+	 }
+
+}
